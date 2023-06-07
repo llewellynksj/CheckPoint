@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Add POST{% endblock %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<!--If the user is authenticated he can add a post in the Blog section-->
+<h1 class="text-center m-3" style="
+    color: #011140;
+"><strong><em>Create a post for our blog!</em></strong></h1>
+<br /> <br />
+
+<div class="ml-5 rules">
+    <strong>Rules:</strong>
+    <br>
+    <em>
+        <small>1. After clicking the Post button, your post will be directed to the admins to be approved.</small>
+        <br>
+        <small>2. Please don't use punctuation in the title, we prefer just plain text. We are cool.</small>
+        <br>
+        <small>3. Try to post something that defines our organisation, any other posts will be deleted.</small>
+        <br>
+        <small>4. Your post can be approved in maximum 24h.</small>
+        <br>
+        <small> Have fun! Let's get social!</small>
+    </em>
+</div>
+<div class="form-group m-5">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-dark mb-2 button-design" style="
+        align-self: center;
+    ">Post</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

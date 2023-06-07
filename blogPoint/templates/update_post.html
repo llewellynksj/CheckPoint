@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Edit blog post{% endblock %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<!--If the user is authenticated they can update their post-->
+<h1 class="text-center m-3" style="
+color: #07430c;
+"><strong><em>Edit your post:</em></strong></h1>
+<br /> <br />
+
+<div class="ml-5">
+    <strong>Remember:</strong>
+    <br>
+    <em>
+        <small>1. After clicking the Update button, your post will be updated automatically</small>
+        <br>
+        <small>2. Please don't use punctuation in the title, we prefer just plain text. We are cool.</small>
+        <br>
+        <small>3. Try to post something that defines our organization, any other posts will be deleted.</small>
+    </em>
+    <small> Have fun! Let's get social!</small>
+</div>
+
+<div class="form-group m-5">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-dark mb-2 button-design" style="
+        float: right;
+    ">Update</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

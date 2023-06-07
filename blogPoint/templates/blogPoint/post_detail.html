@@ -1,0 +1,130 @@
+{% extends 'base.html' %} {% block content %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+<div>
+    <h3 class="text-center mt-3 mb-3 fw-bold">{{ post.title }}</h3>
+</div>
+<div>
+    {% if post.featured_image %}
+    <img src="{{ post.featured_image.url }}" class="mx-auto d-block" height="500px" width="auto" alt="picture added by user">
+    {% else %}
+    <img src="{% static 'images/pholdb.jpg' %}" class="mx-auto d-block" height="100px" width="auto" alt="placeholder">
+    {% endif %}
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <!-- The post content goes inside the card-text. -->
+                <!-- Use the | safe filter inside the template tags -->
+                <p class="post-subtitle" style="color: rgb(0, 0, 0);">By: 
+                    {% if user.profile.profile_pic %}
+                    <img src="{{ user.profile.profile_pic.url }}" width=25 height=25 class="rounded-circle"
+                        alt="User profile picture">
+                    {% else %}
+                    <img src="{% static 'images/defaultpic.webp' %}" width=25 height=25 alt="Default Picture">
+                    {% endif %} {{ post.author }} | <small><em>On: 
+                    {{ post.created_on }}</em></small></p>
+                <p class="card-text">
+                    {{ post.content | safe }}
+                </p>
+                <div class="row">
+
+                    <div class="col-4 text-center">
+                        <strong>
+                            {% if user.is_authenticated %}
+                            <form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if liked %}
+                                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn-like"><i class="fa-solid fa-heart" style="
+                                    color: red;
+                                "></i></button>
+                                {% else %}
+                                <button type="submit" name="blogpost_id" value="{{post.slug}}" class="btn-like"><i class="fa-regular fa-heart" style="
+                                    color: red;
+                                "></i></button>
+                                {% endif %}
+                            </form>
+                            {% else %}
+                            <span class="text-secondary"><i class="fa-regular fa-heart"></span>
+                            {% endif %}
+                            <!-- The number of likes goes before the closing strong tag -->
+                            <span class="text-secondary">{{ post.number_of_likes }} </span>
+                        </strong>
+                    </div>
+                    <div class="col-2 text-center">
+                        {% with comments.count as total_comments %}
+                        <strong class="text-secondary"><i class="fa-solid fa-comment"></i></i>
+                            <!-- Our total_comments variable goes before the closing strong tag -->
+                            {{ total_comments }}</strong>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <small><a href="{% url 'update_post' post.pk %}" class="editpost btn btn-success">Edit Post <i class="fa-solid fa-pencil"></i></a></small>
+        <small><a href="{% url 'delete_post' post.pk %}" class="deletepost btn btn-danger">Delete Post <i class="fa-solid fa-trash"></i></a></small>
+    </div>
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 card mb-12  mt-3 ">
+            <h3>Comments:</h3>
+            <div class="card-body">
+                <!-- We want a for loop inside the empty control tags to iterate through each comment in comments -->
+                {% for comment in comments %}
+                <div class="comments shadow p-2 mb-2 bg-white" style="padding: 10px;border-radius: 15px;">
+                    <p>
+                        <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
+                        {% if comment.user.profile.profile_pic %}
+                        <img src="{{ comment.user.profile.profile_pic.url }}" width=30 height=30 class="rounded-circle"
+                            alt="User profile picture">
+                        {% else %}
+                        <img src="{% static 'images/defaultpic.webp' %}" width=30 height=30 alt="Default Picture">
+                        {% endif %}
+                        <a class="user_name_hover" href="{% url 'show_profile_page' comment.user.profile.id %}">{{ comment.name }}</a>
+                        <!-- The comment's created date goes here -->
+                        </span> - wrote:
+                    </p>
+                    <!-- The body of the comment -->
+                    {{ comment.body | linebreaks }}
+                    <small><em>{{ comment.created_on }}</em></small>
+                    
+                </div>
+                <!-- Our for loop ends here -->
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-12 card mb-12  mt-2 mb-4">
+            <div class="card-body" style="margin-left: 1px;margin-top: 1px;">
+                <!-- Once a user plans to leave a comment this will be send for approval, and the comment will be visible after it has been approved.  -->
+                {% if commented %}
+                <div class="alert alert-success" role="alert">
+                    Your comment is awaiting approval
+                </div>
+                {% else %}
+                {% if user.is_authenticated %}
+
+                <p>Post a comment as: {{ user.username }}</p>
+                <form method="post" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-dark" style="
+                    float: right;
+                ">Submit</button>
+                </form>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

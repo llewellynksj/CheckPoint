@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h1 id="page_header">Contact & Resources</h1>
+    <img id="contact_img" src="../static/images/typing.webp" alt="Image of a man's hands typing">
+</div>
+<div id="contact-container">
+    <div id="contact-links">
+        <h2>Created In Association With <span>Ex Military Careers</span></h2>
+        <ul id="emc-info">
+            <li><span>Visit:</span> <a
+                    href="https://www.ex-militarycareers.com/">https://www.ex-militarycareers.com/</a></li>
+            <li><span>Call:</span> 0203 973 3543</li>
+            <li><span>Email:</span> info@ex-militarycareers.com</li>
+        </ul>
+        <h2 id="h2-get-support">Get Support</h2>
+        <ul id="support-info">
+            <li>SSAFA</li>
+            <ul>
+                <li>SSAFA's Forcesline is a confidential helpline providing advice and information for serving
+                    personnel,
+                    reserves, veterans and their families.</li>
+                <li><span>Call:</span> 0800 260 6767</li>
+                <li><span>Visit:</span> <a href="ssafa.org.uk/forcesline">ssafa.org.uk/forcesline</a></li>
+            </ul>
+            <li>Combat Stress</li>
+            <ul>
+                <li>“Combat Stress provides a range of community, outpatient and residential mental health services to
+                    veterans with complex mental health problems. We provide services in-person, and via phone and
+                    online.</li>
+                <li><span>Visit:</span> <a href="combatstress.org.uk">combatstress.org.uk</a></li>
+                <li><span>Call:</span> 08001381619</li>
+                <li><span>Email:</span> helpline@combatstress.org.uk</li>
+            </ul>
+            <li>Togetherall</li>
+            <ul>
+                <li>“Welcome to Togetherall. Our community is here to help you through difficult feelings you're
+                    experiencing, even if you've never felt comfortable talking about them before. On Togetherall you
+                    can connect anonymously with others who can relate to how you're feeling and use a range of tools to
+                    better understand those feelings.”</li>
+                <li><span>Visit:</span> <a href="http://togetherall.com/">http://togetherall.com/</a></li>
+            </ul>
+        </ul>
+    </div>
+    <div id="contact-form">
+        <h2>Contact Us</h2>
+        <em>
+            <p>This form will be send to TheCheckPoint email address. <br> TheCheckPoint read this emails on the daily
+                basis.
+        </em><br> GDPR - We will never share your message with anybody, you can choose to use an anonymous name.</p>
+        <form action="mailto:thecheckpoint@gmail.com" method="post" enctype="text/plain">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea><br>
+
+            <button type="submit" class="button-design">Send</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

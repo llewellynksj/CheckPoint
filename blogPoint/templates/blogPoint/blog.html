@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+{% if user.is_authenticated %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Blog Entries Column -->
+            <div class="col-12 mt-1 left">
+                <br>
+                <h3 class="text-center">Welcome to our blog. Enjoy your time here!</h3>
+                <br>
+                <div class="text-center mb-3">
+                    <a class="text-center m-3" href="{% url 'add_post' %}" style="
+                        background-color: #011140;
+                        padding: 15px;
+                        color: whitesmoke;
+                        border: 2px solid whitesmoke;
+                        border-radius: 8px;
+                        text-decoration: none;
+                        ">Add Post   <i class="fa-solid fa-envelope-open-text" style="color: white;"></i></a>
+                </div>
+
+                <div class="row">
+                    {% for post in post_list %}
+                    <div class="col-md-12" style="
+                        padding-right: 25%;
+                        padding-left: 25%;">
+                        <div class="card mb-4">
+                            <div class="card-body" style="
+                                padding-bottom: 0;">
+                                <div class="image-container">
+                                    <!--We will implement a holder for post without an image-->
+                                    {% if user.profile.profile_pic %}
+                                    <div class="image-flash">
+                                        <img src="{{ user.profile.profile_pic.url }}" width=25 height=25
+                                            class="rounded-circle" alt="User profile picture" style="
+                                            float: left;">
+                                        {% else %}
+                                        <img src="{% static 'images/defaultpic.webp' %}" width=25 height=25
+                                            alt="Default Picture" style="
+                                            float: left;">
+                                        {% endif %}
+                                        <p class="author text-capitalize">{{ post.author }}</p>
+                                        <a href="{% url 'post_detail' post.slug  %}" class="post-link text-center">
+                                            <h2 class="card-title text-capitalize">{{ post.title }}</h2>
+                                            <p class="card-text">{{ post.excerpt }}</p>
+                                        </a>
+                                    </div>
+                                    {% if post.featured_image %}
+                                    <img src="{{ post.featured_image.url }}" width="100%" alt="picture added by user">
+                                    {% else %}
+                                    <img src="{% static 'images/pholdb.jpg' %}" width="100%" alt="placeholder">
+                                    {% endif %}
+                                </div>
+                                <br>
+                                <div>
+                                    <h5><i class="fa-solid fa-heart ps-3"></i>
+                                        {{ post.number_of_likes }}</h5>
+                                </div>
+                                <!--We have added an edit and update post-->
+                                <div class="text-center mb-1">
+                                    <small><a href="{% url 'update_post' post.pk %}"
+                                            class="editpost btn btn-success mr-3">Edit
+                                            Post <i class="fa-solid fa-pencil"></i></a></small>
+                                    <small><a href="{% url 'delete_post' post.pk %}"
+                                            class="deletepost btn btn-danger">Delete
+                                            Post <i class="fa-solid fa-trash"></i></a></small>
+                                </div>
+                                <div class="text-right">
+                                    <small> <em>-- {{ post.created_on}}</em></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if forloop.counter|divisibleby:12 %}
+    <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+    <p class="text-center"><small><em>Leave a comment expressing what
+        you think.</em></small>
+    </p>
+
+    <div>
+    <!--If there are more than 6 posts on a page, django will create another-->
+        {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link"
+                        style="color: #000000; background-color: white;">&laquo; PREV </a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"
+                        style="color: #000000; background-color: white;"> NEXT &raquo;</a></li>
+
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+{% endif %}
+{%endblock%}

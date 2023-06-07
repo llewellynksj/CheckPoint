@@ -1,0 +1,1 @@
+web: gunicorn ThePoint.wsgi:application

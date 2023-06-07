@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- spacer section to push body below the nav bar -->
+<div class="spacer">
+    &nbsp;
+</div>
+
+<!-- page title -->
+<div>
+    <h1 class="page-title">About</h1>
+</div>
+
+<!-- about us section -->
+<section class="flex-container">
+    <img class="about-img" src="../../static/images/city_life.webp" alt="A man stands with his back to the camera while busy city life is happening around him">
+    <div class="about-text">
+        <h2><em>Ever feel like life is just happening around you?</em></h2>
+        <br>
+        <p>CheckPoint's mission is to facilitate a <strong>peer-led</strong> support service to ex-servicemen and women who are struggling with mental health.</p>
+        <p>The blog style of the site allows veterans to share their own experience and explore different ways of improving their health and well-being. The driving force behind this method of digital story sharing is to enable users to discuss their difficulties transitioning back to civilian life without the attached mental health stigma.</p>
+        <p>We hope that through the medium of blogging, veterans are able to share their experiences and explore different ways of imporving their quality of life in a safe, unassuming environment.</p>
+        <div class="button-container">
+            <button><a href="{% url 'blogs' %}">Post a blog</a></button>
+        </div>
+    </div>
+</section>
+
+
+<!-- what CheckPoint offers section -->
+<section class="flex-container about-section-2">
+    <img class="about-img" src="../../static/images/art.webp" alt="Two people sit painting on a canvas">
+    <div class="about-text">
+        <h3>How can CheckPoint help?</h3>
+        <p>Storytelling and art has been part of the human experience for generations. Stories are powerful and by telling your story you are able to spark conversations, create lasting relationships, and have the ability to voice your thoughts and ideas and have others listen and connect. Sometimes what we want to express cannot be expressed wholeheartedly through words and this is where art comes to play. You do not have to be an artist to create a work of art. You can use a variety of art tools; anything that you feel comfortable using and just express yourself. There is no judgement here.</p>
+        <p>CheckPoint allows you to write your story and/or digitally add your art. You can do this by taking a picture of your work and uploading it and/or write a blog post. Remember this is your space.</p>
+        <div class="button-container">
+            <button><a href="{% url 'blogs' %}">Share your art</a></button>
+        </div>
+    </div>
+</section>
+
+
+<!-- CheckPoint creators section -->
+<section class="flex-container about-section-3">
+    <div>
+        <h3>Created by</h3>
+        <p>This website has been created by team Karma Bytes as part of the April 2023 <a href="https://codeinstitute.net/" target="_blank" rel="noopener" aria-label="visit the Code Institute website (opens in new tag)">Code Institute</a> Hackathon, in association with <a href="https://www.trustinsoda.com/" target="_blank" rel="noopener" aria-label="visit the Trust in SODA website (opens in new tag)">Trust in Soda</a> and <a href="https://www.ex-militarycareers.com/" target="_blank" rel="noopener" aria-label="visit the Ex-Military Careers website (opens in new tag)">Ex-Military Careers</a></p>
+    </div>
+    <div>
+        <div class="flex-container team">
+            <div>
+                <img class="profile-img" src="../../static/images/vasi.webp" alt="Headshot photo of team member Vasi">
+                <p>Vasilica Pavaloi</p>
+                <a href="https://github.com/Vasi012"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <div>
+                <img class="profile-img" src="../../static/images/amanda.webp" alt="Headshot photo of team member Amanda">
+                <p>Amanda Pita</p>
+                <a href="https://github.com/apita1423"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <div>
+                <img class="profile-img" src="../../static/images/kate.webp" alt="Headshot photo of team member Kate">
+                <p>Kate Llewellyn</p>
+                <a href="https://github.com/Llewellynksj"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+        <div class="flex-container team">
+            <div>
+                <img class="profile-img" src="../../static/images/ganiat.webp" alt="Headshot photo of team member Ganiat">
+                <p>Ganiat Badara</p>
+                <a href="https://github.com/Oyindamolabadara"><i class="fa-brands fa-github"></i></a>
+            </div>
+            <div>
+                <img class="profile-img" src="../../static/images/james.webp" alt="Cartoon image of github octupus cat to represent team member James">
+                <p>James Martin</p>
+                <a href="https://github.com/JamesMartin1998"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </div>    
+</section>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% load static %}
+
+{% load account %}
+{% load i18n %}
+{% user_display user as name %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light nav-check">
+  <button class="navbar-toggler nav_section1" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown nav_section1">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <!--Home page-->
+        <a class="nav-link" style="color: black;" href="{% url 'home' %}"><strong>Home</strong></a>
+      </li>
+      <li class="nav-item">
+        <!--About page-->
+        <a class="nav-link" style="color: black;" href="{% url 'about' %}"><strong>About</strong></a>
+      </li>
+      <li class="nav-item">
+        <!--Contact page-->
+        <a class="nav-link" style="color: black;" href="{% url 'contact' %}"><strong>Contact</strong></a>
+      </li>
+  </div>
+  <div class="container-fluid nav-section2 flex-row justify-content-center">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <div class="heroimg">
+        <img src="{% static 'images/logoimg_big.webp' %}" alt="logo">
+      </div>
+    </a>
+  </div>
+  </ul>
+
+  <div class="dropdown nav-section3 blog-nav">
+    <a class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      <i class="fa-solid fa-user"></i>
+  </a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+      {% if user.is_authenticated %}
+      <!--If the user is authenticated he can see the Blog and Account links-->
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" style="color:black;" href="{% url 'blogs' %}"><strong>Blog</strong></a>
+      </li>
+      <hr>
+      <li class="nav-item dropdown">
+          <!--Dropdown menu inside Account contains Preview and edit Profile, Account Settings and change email address-->
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="color:black;"
+              href="{% url 'show_profile_page' user.profile.id %}"><strong>Preview Profile</strong></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="color:black;"
+              href="{% url 'edit_profile_page' user.profile.id %}"><strong>Edit Profile</strong></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="color:black;" href="{% url 'edit_profile' %}"><strong>Account
+                Settings</strong></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" style="color:black;" href="{% url 'account_email' %}"><strong>Change
+                E-mail</strong></a>
+          </li>
+          <li>
+          </li>
+          <!--User can logout from his account-->
+          <li class="nav-item">
+            <a class="nav-link" style="color:black;" href="{% url 'account_logout' %}"><strong>{% blocktrans %}Logout,
+                {{name}}{% endblocktrans %}</strong></a>
+          </li>
+
+      </li>
+      <!--If the user is not authenticated they won't see the above-->
+      <!--If user is not authenticated they will see register an account or login in to an account.-->
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'account_signup' %}"><strong>Register</strong></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'account_login' %}"><strong>Login</strong></a>
+      </li>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+<!--A toast message has been implemented to announce user when a significant action takes place-->
+<script>
+  $("dropdown").on("click", function () {
+    $('.dropdown-content').slideToggle();
+  });
+</script>
